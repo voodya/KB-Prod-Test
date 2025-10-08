@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c5391203d141694ab6a07a45d950edc, type: 3}
+  m_Name: ScenesInstaller
+  m_EditorClassIdentifier: 
+  _menu:
+    m_AssetGUID: b3fe812d89796374d98c70498e0fc446
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  _settings:
+    m_AssetGUID: d9a7741167aa1a44288746a257743afc
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  _bg:
+    m_AssetGUID: 35adb963cf3291144a9082ef7eb9b1c2
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  _gamePlay:
+    m_AssetGUID: 5857a2c53423bc844a8149b198076711
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  _gameUI:
+    m_AssetGUID: ea5741f4f17965c4dbee30d6607fce8f
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  _pause:
+    m_AssetGUID: 809c290b072dd61478f7861dfc0cf2b6
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  _delay:
+    m_AssetGUID: e839e206c69364a41b3a6ddfbc3ae82e
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  _result:
+    m_AssetGUID: ea964e8164c0df14bbbc05fc1a2ad5aa
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  _characterView:
+    m_AssetGUID: 650fb806c62ec954898e53ef63c2c56e
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

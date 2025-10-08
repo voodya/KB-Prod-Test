@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_GUID: 086fe246a3d56be489a567ef31d4dae2
+  m_SerializeEntries:
+  - m_GUID: 35adb963cf3291144a9082ef7eb9b1c2
+    m_Address: Assets/Scenes/BG.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5857a2c53423bc844a8149b198076711
+    m_Address: Assets/Scenes/GamePlay.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 650fb806c62ec954898e53ef63c2c56e
+    m_Address: Assets/Scenes/CharacterViewSccene.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 809c290b072dd61478f7861dfc0cf2b6
+    m_Address: Assets/Scenes/Pause.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b3fe812d89796374d98c70498e0fc446
+    m_Address: Assets/Scenes/Menu.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9a7741167aa1a44288746a257743afc
+    m_Address: Assets/Scenes/Settings.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e839e206c69364a41b3a6ddfbc3ae82e
+    m_Address: Assets/Scenes/Delay.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ea5741f4f17965c4dbee30d6607fce8f
+    m_Address: Assets/Scenes/GameUI.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ea964e8164c0df14bbbc05fc1a2ad5aa
+    m_Address: Assets/Scenes/Result.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 44f28b12c43e909408d3505541731bea, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 7f6b973c2a454a547a2f01b89c1c49bf, type: 2}
+    - {fileID: 11400000, guid: 2cfc0880ccae54347803f5144e636d2d, type: 2}
