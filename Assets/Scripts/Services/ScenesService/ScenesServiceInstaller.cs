@@ -14,6 +14,7 @@ public class ScenesServiceInstaller : ScriptableInstaller
     [SerializeField] private AssetReference _delay;
     [SerializeField] private AssetReference _result;
     [SerializeField] private AssetReference _characterView;
+    [SerializeField] private AssetReference _fg;
     public override void Install(IContainerBuilder container)
     {
         ScenesService service = new ScenesService();
@@ -26,6 +27,7 @@ public class ScenesServiceInstaller : ScriptableInstaller
         service.Register<DelayScene>(_delay);
         service.Register<ResultScene>(_result);
         service.Register<CharacterViewScene>(_characterView);
+        service.Register<FGScene>(_fg);
         container.RegisterInstance(service).AsImplementedInterfaces();
     }
 }

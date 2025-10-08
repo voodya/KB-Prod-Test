@@ -92,6 +92,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rect: {fileID: 1992467849069886308}
   _image: {fileID: 795568225701260855}
+  _imageRect: {fileID: 9006731315226767070}
+  _boxCollider: {fileID: 3378424758071803286}
 --- !u!61 &3378424758071803286
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -165,16 +167,16 @@ RectTransform:
   m_GameObject: {fileID: 8986031444417716503}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1992467849069886308}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &958049490479689416
 CanvasRenderer:
   m_ObjectHideFlags: 0

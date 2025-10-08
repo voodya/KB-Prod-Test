@@ -20,11 +20,9 @@ public class PlayerInputModule : ABaseModule
         {
             OnShowed.OnDown.Subscribe(OnDown).AddTo(_compositeDisposable);
             OnShowed.OnUp.Subscribe(OnUp).AddTo(_compositeDisposable);
-            //_runtimeData.CurrentDistance.Subscribe(value => OnShowed.SetDistance(value, 0)).AddTo(OnShowed.OnceSub);
-            //_runtimeData.CurrentEat.Subscribe(value => OnShowed.SetEat(value)).AddTo(OnShowed.OnceSub);
-            //_runtimeData.CurrentHealth.Subscribe(value => OnShowed.SetHearts(value)).AddTo(OnShowed.OnceSub);
-            //scene.OnPause.Subscribe(ShowPause).AddTo(scene.OnceSub);
         });
+        OnUp(Unit.Default);
+        OnDown(Unit.Default);
 
     }
 

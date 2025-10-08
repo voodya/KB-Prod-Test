@@ -639,7 +639,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvasGroup: {fileID: 512371296}
-  _sceneAnimation: {fileID: 11400000, guid: 3d79bca1c46b8004d8dbf8164da365c7, type: 2}
+  _canvasRect: {fileID: 512371300}
+  _sceneAnimation: {fileID: 11400000, guid: de9b4325c9288754faf6d134613af141, type: 2}
   _onReturn: {fileID: 1951916611}
   _onMenu: {fileID: 1543927987}
   _onBG: {fileID: 834990292}

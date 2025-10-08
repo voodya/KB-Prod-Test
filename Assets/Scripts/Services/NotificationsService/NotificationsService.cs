@@ -13,6 +13,7 @@ public class NotificationsService : INotificationsService
     private string _title;
     private string _message;
     private int _timeDelayInMinutes;
+    private const string ChannelID = "Default";
 
     public int Priority => 15;
 
@@ -30,7 +31,7 @@ public class NotificationsService : INotificationsService
             Name = "Default",
             Description = "Default app notifications",
             Importance = Importance.High,
-            Id = "default"
+            Id = ChannelID
         };
         AndroidNotificationCenter.RegisterNotificationChannel(channel);
     }
@@ -46,6 +47,7 @@ public class NotificationsService : INotificationsService
             LargeIcon = "icon_0"
 
         };
+        AndroidNotificationCenter.SendNotification(notification, ChannelID);
     }
 
     public void DelayedNotify(int seconds)
@@ -59,5 +61,7 @@ public class NotificationsService : INotificationsService
             LargeIcon = "icon_0"
 
         };
+
+        AndroidNotificationCenter.SendNotification(notification, ChannelID);
     }
 }

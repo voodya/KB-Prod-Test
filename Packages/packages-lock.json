@@ -7,6 +7,13 @@
       "dependencies": {},
       "hash": "73a63b7f672b88f7e9992f6917eb458a8cbb6fa9"
     },
+    "com.google.external-dependency-manager": {
+      "version": "1.2.183",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
     "com.unity.2d.animation": {
       "version": "10.1.4",
       "depth": 1,
@@ -378,6 +385,15 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "io.appmetrica.analytics": {
+      "version": "6.6.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.google.external-dependency-manager": "1.2.183"
+      },
+      "url": "https://package.openupm.com"
     },
     "jp.hadashikick.vcontainer": {
       "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer",

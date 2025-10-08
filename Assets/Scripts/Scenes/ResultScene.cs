@@ -12,9 +12,11 @@ public class ResultScene : ABaseScene
     [SerializeField] private GameObject _eatRecord;
     [SerializeField] private TextMeshProUGUI _distanceResult;
     [SerializeField] private GameObject _distanceRecord;
+    [SerializeField] private RectTransform _userHolder;
 
     public IObservable<Unit> OnReplay => _onReplay.OnClickAsObservable();
     public IObservable<Unit> OnMenu => _onMenu.OnClickAsObservable();
+    public RectTransform UserHolder => _userHolder;
 
     public void SetData(float currentDistance, uint recordDistance, uint currentEat, uint recordEat)
     {

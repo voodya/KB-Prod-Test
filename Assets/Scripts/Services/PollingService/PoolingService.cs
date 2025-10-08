@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface IPoolingService
 {
+    void Clear<T>(T pfb) where T : MonoBehaviour;
     T GetObject<T>(T pfb) where T : MonoBehaviour;
     void Register<T>(T pfb) where T : MonoBehaviour;
     void ReleaseObject<T>(T obj, string name) where T : MonoBehaviour;
@@ -60,5 +61,10 @@ public class PoolingService : IPoolingService
         _poolingObjectsStr[name].Enqueue(obj);
     }
 
-
+    public void Clear<T>(T pfb) where T : MonoBehaviour
+    {
+        string name = pfb.name;
+        if (_poolingObjectsStr.ContainsKey(name)) return;
+        _poolingObjectsStr[name] = new();
+    }
 }

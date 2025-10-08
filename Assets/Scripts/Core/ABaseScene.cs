@@ -9,6 +9,7 @@ using UnityEngine.Rendering;
 public class ABaseScene : MonoBehaviour, IDisposable
 {
     [SerializeField] private CanvasGroup _canvasGroup;
+    [SerializeField] private RectTransform _canvasRect;
     [SerializeField] private ABaseSceneAnimation _sceneAnimation;
 
     private bool _isShowed;
@@ -16,6 +17,7 @@ public class ABaseScene : MonoBehaviour, IDisposable
     private int _hash;
 
     public CanvasGroup CanvasGroup => _canvasGroup;
+    public RectTransform CanvasRect => _canvasRect;
     public CompositeDisposable OnceSub => _compositeDisposable;
     public bool IsShowed => _isShowed;
 
@@ -23,6 +25,8 @@ public class ABaseScene : MonoBehaviour, IDisposable
     {
         if(_canvasGroup == null)
             _canvasGroup = GetComponent<CanvasGroup>();
+        if (_canvasRect == null)
+            _canvasRect = GetComponent<RectTransform>();
     }
 
     public virtual async UniTask Show()

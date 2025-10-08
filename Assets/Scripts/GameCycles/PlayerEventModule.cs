@@ -1,8 +1,7 @@
 using Cysharp.Threading.Tasks;
-using UnityEngine;
-using UniRx;
-using System;
 using DG.Tweening;
+using UniRx;
+using UnityEngine;
 
 public class PlayerEventModule : ABaseModule
 {
@@ -17,30 +16,37 @@ public class PlayerEventModule : ABaseModule
     public override void OnStart(IMainGameService gameCycleService)
     {
         base.OnStart(gameCycleService);
+        PlayCollisionSafe();
         _playerHolderService.View.OnTriggered.Subscribe(TriggerHandle).AddTo(_compositeDisposable);
     }
 
     private void TriggerHandle(Collider2D d)
     {
-        if(d.CompareTag("Obstacle"))
+
+        if (d.TryGetComponent(out Obstacle obs))
         {
-            if (!_collisionSafe)
+
+            switch (obs.ObstacleType)
             {
-                _runtimeData.CurrentHealth.Value -= 1;
-                PlayCollisionSafe();
+                case EObstacleType.Eat:
+                    _runtimeData.CurrentEat.Value += (uint)obs.Points;
+                    obs.gameObject.SetActive(false);
+                    break;
+                case EObstacleType.FatalObstacle:
+                    if (!_collisionSafe)
+                    {
+                        _runtimeData.CurrentHealth.Value = 0;
+                    }
+                    break;
+                case EObstacleType.DefaultObstacle:
+                    if (!_collisionSafe)
+                    {
+                        _runtimeData.CurrentHealth.Value -= obs.Points;
+                        PlayCollisionSafe();
+                    }
+                    break;
             }
-        }
-        if(d.CompareTag("Eat"))
-        {
-            _runtimeData.CurrentEat.Value += 1;
-            d.GetComponent<Obstacle>().gameObject.SetActive(false);
-        }
-        if(d.CompareTag("largeObstacle"))
-        {
-            if (!_collisionSafe)
-            {
-                _runtimeData.CurrentHealth.Value = 0;
-            }
+
         }
     }
 
@@ -49,9 +55,12 @@ public class PlayerEventModule : ABaseModule
         _fadeTween?.Kill(true);
         _collisionSafe = true;
         _fadeTween = DOTween.Sequence();
-        _fadeTween.Append(_playerHolderService.View.CanvasGroup.DOFade(0.1f, 0.25f));
-        _fadeTween.AppendInterval(2f);
-        _fadeTween.Append(_playerHolderService.View.CanvasGroup.DOFade(1f, 0.25f));
+        _fadeTween.Append(_playerHolderService.View.CanvasGroup.DOFade(0.1f, 0.2f));
+        _fadeTween.Append(_playerHolderService.View.CanvasGroup.DOFade(1f, 0.2f));
+        _fadeTween.Append(_playerHolderService.View.CanvasGroup.DOFade(0.1f, 0.2f));
+        _fadeTween.Append(_playerHolderService.View.CanvasGroup.DOFade(1f, 0.2f));
+        _fadeTween.Append(_playerHolderService.View.CanvasGroup.DOFade(0.1f, 0.2f));
+        _fadeTween.Append(_playerHolderService.View.CanvasGroup.DOFade(1f, 0.2f));
         _fadeTween.OnComplete(() => _collisionSafe = false);
     }
 }

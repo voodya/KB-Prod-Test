@@ -24,11 +24,13 @@ public class MainGameService : IMainGameService
     private IRuntimeUserData _runtimeUserData;
     private IMonoEventHandlerService _monoEventHandlerService;
     private ISaveService _saveService;
+
     private GameConfig _gameConfig;
     //local
     private GamePlayScene _gamePlayScene;
     private CompositeDisposable _compositeDisposable;
     private Subject<bool> _onEnd = new();
+
 
 
     
@@ -44,7 +46,8 @@ public class MainGameService : IMainGameService
         IRuntimeUserData runtimeUserData,
         IMonoEventHandlerService monoEventHandlerService,
         GameConfig gameConfig,
-        ISaveService saveService)
+        ISaveService saveService,
+        IAppMetricaService appMetricaService)
     {
         _modules = gameCycles;
         _scenesService = scenesService;
@@ -139,28 +142,32 @@ public class MainGameService : IMainGameService
 
     private void OnHit(uint obj)
     {
-        if (obj == 0)
+        if (obj <= 0)
         {
+            
             Time.timeScale = 0;
             _scenesService.GetScene<ResultScene>(false,
             scene =>
             {
-                scene.OnMenu.Subscribe(_ => 
+                scene.OnMenu.Subscribe(async _ => 
                 {
+                    scene = await _scenesService.GetScene<ResultScene>();
+                    scene.Hide();
                     Time.timeScale = 1;
-                    _scenesService.ReleaseScene<ResultScene>();
                     OnEnd(false);
                 }).AddTo(scene.OnceSub);
-                scene.OnReplay.Subscribe(_ =>
+                scene.OnReplay.Subscribe(async _ =>
                 {
+                    scene = await _scenesService.GetScene<ResultScene>();
+                    scene.Hide();
                     Time.timeScale = 1;
-                    _scenesService.ReleaseScene<ResultScene>();
                     OnEnd(true);
                 }).AddTo(scene.OnceSub);
             },
             beforeShow =>
             {
                 _saveService.TryGetData(nameof(UserData), out UserData data);
+                _playerHolderService.SetPlayerToRect(beforeShow.UserHolder, Vector2.zero);
                 beforeShow.SetData(
                     _runtimeUserData.CurrentDistance.Value,
                     data != null?data.DistanceRecord : 0,
@@ -171,15 +178,15 @@ public class MainGameService : IMainGameService
         }
     }
 
-    private void OnEnd(bool onReplay)
+    private async UniTask OnEnd(bool onReplay)
     {
-        _onEnd?.OnNext(onReplay);
+        
         _compositeDisposable?.Dispose();
         foreach (var item in _modules)
         {
             item.OnEnd();
         }
-
-        
+        await _scenesService.ReleaseScene<FGScene>();
+        _onEnd?.OnNext(onReplay);
     }
 }

@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks.Triggers;
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -15,6 +15,10 @@ public class GameUIScene : ABaseScene
     [SerializeField] private TextMeshProUGUI _currentEat;
     [SerializeField] private List<Image> _hearts;
     [SerializeField] private Slider _slider;
+    [SerializeField] private RectTransform _sliderRect;
+    [SerializeField] private GameObject _animatedRecord;
+
+    private bool _isSliderActive;
 
     public IObservable<Unit> OnUp => _up.OnClickAsObservable();
     public IObservable<Unit> OnDown => _down.OnClickAsObservable();
@@ -23,18 +27,36 @@ public class GameUIScene : ABaseScene
     public void SetDistance(float current, uint record)
     {
         _currentDistance.text = Mathf.RoundToInt(current).ToString();
-        if(current < record)
+        if (_isSliderActive)
         {
-            _slider.gameObject.SetActive(true);
-            _slider.maxValue = record;
             _slider.value = current;
-        }
-        else
-        {
-            _slider.gameObject.SetActive(false);
-        }
+            if (current >= record)
+            {
+                _isSliderActive = false;
+                HideSlider();
+            }
 
+        }
+        else if (current < record)
+        {
+            _slider.maxValue = record;
+            _slider.value = 0;
+            _isSliderActive = true;
+            ShowSlider();
+        }
     }
+
+    private void HideSlider()
+    {
+        _sliderRect.DOAnchorPos(new Vector2(0, 300), 0.5f).SetEase(Ease.InBack);
+        _animatedRecord.gameObject.SetActive(true);
+    }
+    private void ShowSlider()
+    {
+        _sliderRect.DOAnchorPos(new Vector2(0, -125), 0.5f).SetEase(Ease.OutBack);
+    }
+
+
 
     public void SetEat(uint current)
     {

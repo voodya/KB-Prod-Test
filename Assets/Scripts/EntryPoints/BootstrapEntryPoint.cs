@@ -13,8 +13,10 @@ public class BootstrapEntryPoint : ABaseEntryPoint
     private IRuntimeUserData _runtimeUserData;
     private INotificationsService _notificationsService;
     private IMonoEventHandlerService _monoEvent;
+    private IAppMetricaService _appMetricaService;
     private UserData _userData;
     private SettingsData _settingsData;
+    private uint _playId = 0;
 
     public BootstrapEntryPoint(
         IEnumerable<IBootable> bootables,
@@ -24,7 +26,8 @@ public class BootstrapEntryPoint : ABaseEntryPoint
         ISaveService saveService,
         IRuntimeUserData runtimeUserData,
         INotificationsService notificationsService,
-        IMonoEventHandlerService monoEvent) : base(bootables)
+        IMonoEventHandlerService monoEvent,
+        IAppMetricaService appMetricaService) : base(bootables)
     {
         _scenesService = scenesService;
         _playerHolderService = playerHolderService;
@@ -33,6 +36,7 @@ public class BootstrapEntryPoint : ABaseEntryPoint
         _runtimeUserData = runtimeUserData;
         _notificationsService = notificationsService;
         _monoEvent = monoEvent;
+        _appMetricaService = appMetricaService;
     }
 
     public override async UniTask StartAsync(CancellationToken cancellation = default)
@@ -65,17 +69,18 @@ public class BootstrapEntryPoint : ABaseEntryPoint
                 _userData.EatRecord = _runtimeUserData.CurrentEat.Value;
             }
             _saveService.SetData(nameof(UserData), _userData);
-            
+            _appMetricaService?.EndGame((uint)_runtimeUserData.CurrentDistance.Value, _runtimeUserData.CurrentEat.Value);
 
-            if(_)
+            if (_)
             {
                 await _scenesService.GetScene<CharacterViewScene>(false, _ => { }, 
                     beforeShow => 
                     {
                         _playerHolderService.SetPlayerToRect(beforeShow.CharacterRect, Vector2.zero);
                     });
+                
                 await _scenesService.ReleaseScene<GamePlayScene>();
-                await _scenesService.ReleaseScene<GameUIScene>();
+                _scenesService.ReleaseScene<GameUIScene>();
                 PlayGame();
             }
             else
@@ -97,6 +102,7 @@ public class BootstrapEntryPoint : ABaseEntryPoint
         {
             onLoadScene.OnPlay.Subscribe(_ => PlayGame()).AddTo(onLoadScene.OnceSub);
             onLoadScene.OnSettings.Subscribe(_ => OpenSettings()).AddTo(onLoadScene.OnceSub);
+            onLoadScene.OnTestNoitifi.Subscribe(_ => _notificationsService.DelayedNotify(1)).AddTo(onLoadScene.OnceSub);
         },
         beforeLoadScene =>
         {
@@ -133,10 +139,13 @@ public class BootstrapEntryPoint : ABaseEntryPoint
 
     private async void PlayGame()
     {
+        _playId++;
+        _appMetricaService?.LaunchGame(_playId);
         var scene = await _scenesService.GetScene<GamePlayScene>(false,
             scene => _playerHolderService.SetPlayerToRect(scene.PlayerHolder, Vector2.zero));
         _gameCycleService.StartGameCycles();
         _scenesService.ReleaseScene<MenuScene>();
+        _scenesService.GetScene<FGScene>();
         
         
     }

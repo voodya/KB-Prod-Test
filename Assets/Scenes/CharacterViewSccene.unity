@@ -188,7 +188,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvasGroup: {fileID: 1060445582}
-  _sceneAnimation: {fileID: 11400000, guid: 3d79bca1c46b8004d8dbf8164da365c7, type: 2}
+  _canvasRect: {fileID: 1060445586}
+  _sceneAnimation: {fileID: 11400000, guid: de9b4325c9288754faf6d134613af141, type: 2}
   _characterRect: {fileID: 480150925}
 --- !u!225 &1060445582
 CanvasGroup:

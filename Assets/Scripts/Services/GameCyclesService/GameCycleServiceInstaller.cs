@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
 
@@ -5,10 +6,13 @@ using VContainer;
 public class GameCycleServiceInstaller : ScriptableInstaller
 {
     [SerializeField] private Obstacle _obstaclePfb;
-    [SerializeField] private Obstacle _largeObstaclePfb;
-    [SerializeField] private Obstacle _eatPfb;
     [SerializeField] private RectTransform _roadRect;
     [SerializeField] private GameConfig _gameConfig;
+
+    [SerializeField] private List<ObstacleConfig> _eat;
+    [SerializeField] private List<ObstacleConfig> _fatal;
+    [SerializeField] private List<ObstacleConfig> _default;
+
     public override void Install(IContainerBuilder container)
     {
         container.Register<PlayerInputModule>(Lifetime.Singleton).AsImplementedInterfaces();
@@ -26,8 +30,12 @@ public class GameCycleServiceInstaller : ScriptableInstaller
 
         container.Register<ObjectsSpawnerModule>(Lifetime.Singleton)
             .WithParameter("obstacle", _obstaclePfb)
-            .WithParameter("largeObstacle", _largeObstaclePfb)
-            .WithParameter("eat", _eatPfb)
+            .WithParameter("configs", new Dictionary<EObstacleType, List<ObstacleConfig>>() 
+            {
+                { EObstacleType.Eat, _eat },
+                { EObstacleType.FatalObstacle, _fatal },
+                { EObstacleType.DefaultObstacle, _default }
+            })
             .AsImplementedInterfaces();
 
         container.Register<MainGameService>(Lifetime.Singleton)
