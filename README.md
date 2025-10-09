@@ -25,7 +25,7 @@
 
 ```mermaid
 graph TD
-    Inject --> Services --> EntryPoints --> GameCycles(Modules)
+    Inject --> Services --> IBootable --> EntryPoints --> GameCycles(Modules)
 ```
 ### Сервисы 1го порядка
 -  сервисы не имеющие зависимостей
