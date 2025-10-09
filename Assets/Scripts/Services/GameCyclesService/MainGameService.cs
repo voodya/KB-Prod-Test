@@ -24,6 +24,7 @@ public class MainGameService : IMainGameService
     private IRuntimeUserData _runtimeUserData;
     private IMonoEventHandlerService _monoEventHandlerService;
     private ISaveService _saveService;
+    private IParallaxService _parallaxService;
 
     private GameConfig _gameConfig;
     //local
@@ -47,7 +48,8 @@ public class MainGameService : IMainGameService
         IMonoEventHandlerService monoEventHandlerService,
         GameConfig gameConfig,
         ISaveService saveService,
-        IAppMetricaService appMetricaService)
+        IAppMetricaService appMetricaService,
+        IParallaxService parallaxService)
     {
         _modules = gameCycles;
         _scenesService = scenesService;
@@ -56,6 +58,7 @@ public class MainGameService : IMainGameService
         _monoEventHandlerService = monoEventHandlerService;
         _gameConfig = gameConfig;
         _saveService = saveService;
+        _parallaxService = parallaxService;
     }
 
     public async void StartGameCycles()
@@ -186,7 +189,7 @@ public class MainGameService : IMainGameService
         {
             item.OnEnd();
         }
-        await _scenesService.ReleaseScene<FGScene>();
+        await _scenesService.ReleaseScene<FGScene>(scene => _parallaxService.ReleaseLayer(scene.ExtraFrontLayer, 3));
         _onEnd?.OnNext(onReplay);
     }
 }

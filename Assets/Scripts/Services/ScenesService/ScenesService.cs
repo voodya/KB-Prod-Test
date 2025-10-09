@@ -11,7 +11,7 @@ public interface IScenesService
 {
     UniTask<T> GetScene<T>(bool hide = false, Action<T> OnShowed = null, Action<T> beforeShow = null) where T : ABaseScene;
     void Register<T>(AssetReference reference) where T : ABaseScene;
-    UniTask ReleaseScene<T>() where T : ABaseScene;
+    UniTask ReleaseScene<T>(Action<T> BeforeRelease = null) where T : ABaseScene;
 }
 
 
@@ -82,13 +82,14 @@ public class ScenesService : IScenesService
         }
     }
 
-    public async UniTask ReleaseScene<T>()
+    public async UniTask ReleaseScene<T>(Action<T> BeforeRelease = null)
             where T : ABaseScene
     {
         Type screenType = typeof(T);
         Debug.Log($"ALERT_RELEASE_SCENE => {screenType}");
         if (_loadedScenes.ContainsKey(screenType))
         {
+            BeforeRelease?.Invoke(_loadedScenes[screenType].Item1 as T);
             await _loadedScenes[screenType].Item1.Hide();
             _loadedScenes[screenType].Item1.Dispose();
             await Addressables.UnloadSceneAsync(_loadedScenes[screenType].Item2);

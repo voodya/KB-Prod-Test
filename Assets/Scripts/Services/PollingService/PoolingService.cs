@@ -48,7 +48,15 @@ public class PoolingService : IPoolingService
     {
         string type = pfb.name;
         if (_poolingObjectsStr[type].Count > 0)
-            return _poolingObjectsStr[type].Dequeue() as T;
+        {
+            if(_poolingObjectsStr[type].Peek() != null)
+                return _poolingObjectsStr[type].Dequeue() as T;
+            else
+            {
+                _poolingObjectsStr[type].Dequeue();
+                return _monoProvider.GetInstance(_pfbsStr[type]) as T;
+            }
+        }
         else
         {
             return _monoProvider.GetInstance(_pfbsStr[type]) as T;

@@ -14,6 +14,7 @@ public class BootstrapEntryPoint : ABaseEntryPoint
     private INotificationsService _notificationsService;
     private IMonoEventHandlerService _monoEvent;
     private IAppMetricaService _appMetricaService;
+    private IParallaxService _parallaxService;
     private UserData _userData;
     private SettingsData _settingsData;
     private uint _playId = 0;
@@ -27,7 +28,8 @@ public class BootstrapEntryPoint : ABaseEntryPoint
         IRuntimeUserData runtimeUserData,
         INotificationsService notificationsService,
         IMonoEventHandlerService monoEvent,
-        IAppMetricaService appMetricaService) : base(bootables)
+        IAppMetricaService appMetricaService,
+        IParallaxService parallaxService) : base(bootables)
     {
         _scenesService = scenesService;
         _playerHolderService = playerHolderService;
@@ -37,6 +39,7 @@ public class BootstrapEntryPoint : ABaseEntryPoint
         _notificationsService = notificationsService;
         _monoEvent = monoEvent;
         _appMetricaService = appMetricaService;
+        _parallaxService = parallaxService;
     }
 
     public override async UniTask StartAsync(CancellationToken cancellation = default)
@@ -54,7 +57,12 @@ public class BootstrapEntryPoint : ABaseEntryPoint
             _settingsData.IsMusic = true;
             _settingsData.IsSound = true;
         }
-        await _scenesService.GetScene<BGScene>();
+        await _scenesService.GetScene<BGScene>(false, _ => { }, scene => 
+        {
+            _parallaxService.RegisterLayer(scene.BackLayer, 0);
+            _parallaxService.RegisterLayer(scene.MiddleLayer, 1);
+            _parallaxService.RegisterLayer(scene.FrontLayer, 2);
+        }  );
         _monoEvent.OnQuit.Subscribe(_ => _notificationsService.DelayedNotify(10));
 
         _gameCycleService.OnEndCycle.Subscribe(async _ =>
@@ -91,7 +99,7 @@ public class BootstrapEntryPoint : ABaseEntryPoint
             }
             
         }).AddTo(Disposable);
-
+        _parallaxService.PlayParallax();
         LoadMainMenu();
     }
 
@@ -145,8 +153,11 @@ public class BootstrapEntryPoint : ABaseEntryPoint
             scene => _playerHolderService.SetPlayerToRect(scene.PlayerHolder, Vector2.zero));
         _gameCycleService.StartGameCycles();
         _scenesService.ReleaseScene<MenuScene>();
-        _scenesService.GetScene<FGScene>();
-        
-        
+        _scenesService.GetScene<FGScene>(false, _ => { }, scene =>
+        {
+            _parallaxService.RegisterLayer(scene.ExtraFrontLayer, 3);
+        });
+
+
     }
 }
