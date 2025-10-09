@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using UniRx;
 using VContainer;
@@ -22,7 +23,8 @@ public class ABaseEntryPoint : IAsyncStartable
     {
         _compositeDisposable?.Dispose();
         _compositeDisposable = new CompositeDisposable();
-        foreach (var bootable in _bootables)
+        var sorted = _bootables.OrderBy(x => x.Priority);
+        foreach (var bootable in sorted)
         {
             await bootable.Boot();
         }
